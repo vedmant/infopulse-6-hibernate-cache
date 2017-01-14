@@ -20,6 +20,25 @@ public class Select {
         persons.forEach(person -> System.out.println(person.getName()));
 
         entityManager.getTransaction().commit();
+
+        entityManager.getTransaction().begin();
+
+        List<MyPerson> persons2 = entityManager.createQuery("from entity.MyPerson", MyPerson.class).getResultList();
+
+        persons2.forEach(person -> System.out.println(person.getName()));
+
+        entityManager.getTransaction().commit();
+
+
+        entityManager.getTransaction().begin();
+
+        MyPerson person = entityManager.createNamedQuery("get_person_by_name", MyPerson.class)
+                .setParameter("name", "John").getSingleResult();
+
+        System.out.println(person.getName());
+
+        entityManager.getTransaction().commit();
+
         entityManager.close();
         sessionFactory.close();
     }

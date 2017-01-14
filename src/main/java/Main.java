@@ -24,13 +24,16 @@ public class Main {
 
         MyPerson person1 = new MyPerson();
         person1.setName("John");
-        person1.setNickName("wild");
+        person1.setNickName("wild-2");
         person1.setSum(50);
         person1.setBalance(100);
-        person1.getPhones().add(phone1);
-        person1.getPhones().add(phone2);
         person1.getAddresses().put(AddressType.HOME, "33 Home st. New York");
         person1.getAddresses().put(AddressType.OFFICE, "77 Office st. New York");
+        person1.getPhones().add(phone1);
+        person1.getPhones().add(phone2);
+
+        phone1.setPerson(person1);
+        phone2.setPerson(person1);
 
         entityManager.persist(phone1);
         entityManager.persist(phone2);
@@ -39,16 +42,29 @@ public class Main {
         entityManager.getTransaction().commit();
         entityManager.getTransaction().begin();
 
+        MyPhone phone3 = new MyPhone();
+        phone3.setType(PhoneType.LAND_LINE);
+        phone3.setNumber("123456");
+
+        MyPhone phone4 = new MyPhone();
+        phone4.setType(PhoneType.MOBILE);
+        phone4.setNumber("111222");
+
         MyPerson person2 = new MyPerson();
         person2.setName("Alice");
-        person1.setNickName("rough-1");
+        person2.setNickName("rough-1");
         person2.setSum(50);
         person2.setBalance(100);
-        person2.getPhones().add(phone1);
-        person2.getPhones().add(phone2);
         person2.getAddresses().put(AddressType.HOME, "33 Home st. New York");
         person2.getAddresses().put(AddressType.OFFICE, "77 Office st. New York");
+        person2.getPhones().add(phone3);
+        person2.getPhones().add(phone4);
 
+        phone3.setPerson(person2);
+        phone4.setPerson(person2);
+
+        entityManager.persist(phone3);
+        entityManager.persist(phone4);
         entityManager.persist(person2);
 
         entityManager.getTransaction().commit();
